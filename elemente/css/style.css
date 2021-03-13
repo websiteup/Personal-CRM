@@ -1,0 +1,38 @@
+
+/*
+
+Paleta de culori:
+albastru inchis: #1E3261
+albastru deschis: #A0C4E6
+albastru foarte deschis: #EAF2F9
+portocaliu: #EA6C4A
+
+*/
+
+body {
+	font-size: 14px;
+	padding:0;
+	background-color: #EAF2F9;
+}
+.bg-dark {
+	background-color: #1E3261!important;
+}
+.top-pagina {
+	background-color: #A0C4E6;
+}
+
+.container {
+	padding: 20px 10px;
+	min-height: 600px;
+}
+.box-shadow{
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
+}
+
+footer {
+	background: #EAF2F9;
+	border-top: 2px solid #d7e8f7;
+}
+footer .container {
+	min-height: 60px;
+}
