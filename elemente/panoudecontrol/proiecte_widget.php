@@ -18,9 +18,9 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nume</th>
-        <td>Status</td>
+        <th>Nume</th>        
         <td>Timp estimat</td>
+        <td>Status</td>
         <th class="text-right"></th>
       </tr>
     </thead>
@@ -28,10 +28,10 @@
 
         <?php foreach ($proiecte as $proiect) { ?>
         <tr>
-          <td><?php echo $proiect['id'] ?></td>
-          <td><a href="<?php echo $proiect['link'] ?>" target="_blank"><?php echo $proiect['nume'] ?></td>
-          <td>Timp estimat</td>
-          <td><?php $proiecteObj->afiseazaNumeStatus($proiect['status']); ?></td>
+          <td> <?php echo $proiect['id'] ?> </td>
+          <td> <a href="<?php echo $proiect['link'] ?>" target="_blank"><?php echo $proiect['nume'] ?> </td>
+          <td> <?php $proiecteObj->timpEstimativProiect($proiect['data_start'],$proiect['data_final']); ?> </td>
+          <td> <?php $proiecteObj->afiseazaNumeStatus($proiect['status']); ?> </td>
           <td class="text-right">
            
             <a class="btn btn-info btn-simple btn-link" href="proiect_pagina.php?proiectId=<?php echo $proiect['id'] ?>" style="color:blue">

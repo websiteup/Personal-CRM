@@ -79,6 +79,16 @@ class Proiecte {
 			}
 	}
 
+	// Timp estimativ pentru realizarea proiectului in zile
+	public function timpEstimativProiect($data_start, $data_final) {
+
+			$start_date = strtotime($data_start); 
+			$end_date = strtotime($data_final); 
+			  
+			// Diferenta se divide in secunde 60/60/24 pentru a afisa zilele
+			echo ($end_date - $start_date)/60/60/24 . " zile"; 
+	}
+
 	// Actualizeaza datele din tabelul proiecte
 	public function modificaProiect($client){
 			$nume = $this->con->real_escape_string($_POST['mnume']);	
