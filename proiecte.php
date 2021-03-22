@@ -66,7 +66,7 @@
               <i class="fa fa-lg fa-edit"></i></a>
             
             <a href="proiecte.php?stergeId=<?php echo $proiect['id'] ?>" class="btn btn-info btn-simple btn-link" style="color:red" onclick="confirm('Esti sigur ca vrei sa stergi proiectul <?php echo $proiect['nume'] ?> ?')">
-              <i class="fa fa-lg fa-trash" aria-hidden="true"></i>
+              <i class="fa fa-lg fa-trash"></i>
             </a>
           </td>
         </tr>

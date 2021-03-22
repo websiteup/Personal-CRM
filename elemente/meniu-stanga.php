@@ -3,9 +3,6 @@
     Tip 2: you can also add an image using data-image tag
  -->
 <div class="sidebar" data-image="elemente/style/img/sidebar-5.jpg" data-color="blue">
-
-<!-- Face o variabila cu url-ul pagini fara extensie -->
-<?php $paginaActiva = basename($_SERVER['PHP_SELF'], ".php"); ?>
            
             <div class="sidebar-wrapper">
                 <div class="logo">

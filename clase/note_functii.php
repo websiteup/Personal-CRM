@@ -19,9 +19,8 @@ class Note {
 	// Introduce datele in tabelul note
 	public function introducereNota(){
 		$nota = $this->con->real_escape_string($_POST['nota']);
-		$data = $this->con->real_escape_string(date('d/m/Y H:i:s'));
 		
-		$query = "INSERT INTO note(nota,data) VALUES('$nota','$data')";
+		$query = "INSERT INTO note(nota) VALUES('$nota')";
 
 			$sql = $this->con->query($query);			
 			if ($sql == true) {
@@ -46,6 +45,7 @@ class Note {
 		} 
 	}
 
+
 	// Afiseaza nottile pe ID
 	public function afiseazaNoteByID($id) {
 		    $query = "SELECT * FROM note WHERE id = '$id'";
@@ -59,18 +59,14 @@ class Note {
 	}
 
 	// Actualizeaza notita 
-	public function modificaNota($intrare){
-			$nume = $this->con->real_escape_string($_POST['mnume']);		
-			$descriere = $this->con->real_escape_string($_POST['mdescriere']);
-			$adresa = $this->con->real_escape_string($_POST['madresa']);
-			$website = $this->con->real_escape_string($_POST['mwebsite']);
-			$email = $this->con->real_escape_string($_POST['memail']);
-			$telefon = $this->con->real_escape_string($_POST['mtelefon']);
-			$id = $this->con->real_escape_string($_POST['id']);
+	public function modificaNota($date){
+			$nota = $this->con->real_escape_string($_POST['mnota']);
+			$id = $this->con->real_escape_string($_POST['id']);	
 
-		if (!empty($id) && !empty($intrare)) {
-			$query = "UPDATE intrari SET nume = '$nume', descriere = '$descriere', adresa = '$adresa', website = '$website', email = '$email', telefon = '$telefon' WHERE id = '$id'";
+		if (!empty($id) && !empty($date)) {
+			$query = "UPDATE note SET nota = '$nota' WHERE id = '$id'";
 			$sql = $this->con->query($query);
+			
 			if ($sql == true) {
 				$_SESSION['notificare'] = "Nota a fost actualizata";
 			    header("Location:note.php");
@@ -83,7 +79,7 @@ class Note {
 	// Sterge notita
 	public function stergeNota($id){
 
-		    $query = "DELETE FROM intrari WHERE id = '$id'";
+		    $query = "DELETE FROM note WHERE id = '$id'";
 		    $sql = $this->con->query($query);
 
 			if ($sql == true) {

@@ -20,13 +20,12 @@ class Utilizatori {
 	public function verificaAutentificare($utilizator, $parola){
  
         $sql = "SELECT * FROM utilizatori WHERE utilizator = '$utilizator' AND parola = '$parola'";
-        $query = $this->con->query($sql);
+        $result = $this->con->query($sql);
  
         if (!empty($result) && $result->num_rows > 0) {
-            $row = $query->fetch_array();
+            $row = $result->fetch_array();
             return $row['id'];
-        }
-        else{
+        } else {
             return false;
         }
     }
@@ -42,6 +41,15 @@ class Utilizatori {
 			return $row;
 		}
     }
+
+    public function afiseazaNumeUtilizator($id){		
+		$query = "SELECT * FROM utilizatori WHERE id = '$id'";
+		    $result = $this->con->query($query);
+
+		    while($row = mysqli_fetch_assoc($result)) {
+			echo $row['nume'];
+			}
+	}
 
     public function escape_string($value){
  

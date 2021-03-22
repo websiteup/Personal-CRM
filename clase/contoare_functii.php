@@ -24,4 +24,31 @@ class Contoare {
 
    		echo  "<div class='huge'>{$numar}</div>";
     }
+
+    // Afiseaza proiectele in lucru sau neincepute
+    public function afiseazaProiecte() {
+		$query = "SELECT * FROM proiecte WHERE status = '1' || status = '2'";
+   		$result = $this->con->query($query);
+   		$numar = mysqli_num_rows($result);
+
+   		echo  "<div class='huge'>{$numar}</div>";
+    }
+
+    // Afiseaza suma totala a bugetelor pentru proiectele nefinalizate
+    public function afiseazaSumaTotala() {
+		$query = "SELECT SUM(buget) AS sumatotala FROM proiecte WHERE status != '3'";
+   		$result = $this->con->query($query);
+   		$row = mysqli_fetch_assoc($result); 
+		$sumatotala = $row['sumatotala'];
+
+   		echo  "<div class='huge'>{$sumatotala} €</div>";
+    }
+
+    public function afiseazaTaskuriNerezolvate() {
+		$query = "SELECT * FROM proiecte_taskuri WHERE status = '0'";
+   		$result = $this->con->query($query);
+   		$numar = mysqli_num_rows($result);
+
+   		echo  "<div class='huge'>{$numar}</div>";
+    }
 }

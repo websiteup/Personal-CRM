@@ -7,17 +7,19 @@ include "clase/utilizatori_functii.php";
 $utilizatoriObj = new Utilizatori();
  
 /* Verifica formularul de autentificare */
-if(isset($_POST['autentificare'])){
+//print_r($_POST);
+if(isset($_POST['submit'])){
   $utilizator = $utilizatoriObj->escape_string($_POST['utilizator']);
   $parola = $utilizatoriObj->escape_string($_POST['parola']);
+
+  echo $utilizator; 
+  echo $parola; 
  
   $autentificare = $utilizatoriObj->verificaAutentificare($utilizator, $parola);
- 
-  if(!$autentificare){
+  if($autentificare === false){
     $_SESSION['eroare'] = "Numele utilizatorului sau parola sunt gresite";
-    header('location:utilizator_autentificare.php');
-  }
-  else{
+    //header('location:utilizator_autentificare.php');
+  } else {
     $_SESSION['utilizator'] = $autentificare;
     header('location:index.php');
   }
@@ -52,30 +54,33 @@ if(isset($_POST['autentificare'])){
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12 card">
-                    <form id="autentificare" class="form" action="" method="post">
+
+                    <form action="" method="POST">
+                        
                         <h3 class="text-center text-info">Autentificare</h3>
-                        <?php if (isset($_SESSION['eroare']) && $_SESSION['eroare']){?>
-                            <div class='alert alert-danger alert-dismissible' role="alert">
-                                <?php echo $_SESSION['eroare']; ?>
-                                <?php unset($_SESSION['eroare']); ?>
-                            </div>
-                        <?php } ?>
+                            <?php if (isset($_SESSION['eroare']) && $_SESSION['eroare']){?>
+                                <div class='alert alert-danger alert-dismissible' role="alert">
+                                    <?php echo $_SESSION['eroare']; ?>
+                                    <?php unset($_SESSION['eroare']); ?>
+                                </div>
+                            <?php } ?>
                         <div class="form-group">
                             <label for="utilizator">Utilizator:</label><br>
-                            <input type="text" name="utilizator" class="form-control">
+                            <input type="text" name="utilizator" class="form-control" value="admin">
                         </div>
                         <div class="form-group">
                             <label for="parola">Parola:</label><br>
-                            <input type="password" name="parola" class="form-control">
+                            <input type="password" name="parola" class="form-control" value="1234">
                         </div>
                         <div class="form-group">                            
-                            <input type="submit" name="autentificare" class="btn btn-primary btn-fill" value="Autentificare">
+                            <input name="submit" type="submit" class="btn btn-primary btn-fill" value="Autentificare">
                         </div>                        
                         <div class="form-group">                            
                             <span>admin / 1234</span>
                         </div>
 
                     </form>
+
                 </div>
             </div>
         </div>

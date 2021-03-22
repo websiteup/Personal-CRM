@@ -2,10 +2,14 @@
 		</div>
 
 		<footer class="footer">
-		            <span class="copyright">
+		            <span class="copyright" style="float:left">
 		                ©
 		                PROIECT CURS PHP 2021 - Petre Paul Dragos
 		            </span>
+		            <span class="copyright">
+		           Pagina a fost generata in <?php echo(number_format(microtime(true) - $start_time, 4)); ?> secunde.
+		           	</span>
+
 		</footer>
 
     </div>

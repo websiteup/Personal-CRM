@@ -79,6 +79,16 @@ class Proiecte {
 			}
 	}
 
+	// Afiseaza numele tabelul proiecte
+	public function afiseazaNumeProiect($id){		
+		$query = "SELECT * FROM proiecte WHERE id = '$id'";
+		    $result = $this->con->query($query);
+
+		    while($row = mysqli_fetch_assoc($result)) {
+			echo $row['nume'];
+			}
+	}	
+
 	// Timp estimativ pentru realizarea proiectului in zile
 	public function timpEstimativProiect($data_start, $data_final) {
 
@@ -86,7 +96,7 @@ class Proiecte {
 			$end_date = strtotime($data_final); 
 			  
 			// Diferenta se divide in secunde 60/60/24 pentru a afisa zilele
-			echo ($end_date - $start_date)/60/60/24 . " zile"; 
+			echo ceil(($end_date - $start_date)/60/60/24) . " zile"; 
 	}
 
 	// Actualizeaza datele din tabelul proiecte
@@ -95,10 +105,13 @@ class Proiecte {
 			$link = $this->con->real_escape_string($_POST['mlink']);	
 			$categorie = $this->con->real_escape_string($_POST['mcategorie']);	
 			$descriere = $this->con->real_escape_string($_POST['mdescriere']);		
-			$imagine = $this->con->real_escape_string($_POST['mimagine']);		
+			$imagine = 'imagini/'.$_FILES['mimagine']['name'];		
 			$client = $this->con->real_escape_string($_POST['mclient']);
 			$buget = $this->con->real_escape_string($_POST['mbuget']);
 			$status = $this->con->real_escape_string($_POST['mstatus']);
+
+			//incarca fisierul in folderul imagini
+			move_uploaded_file($_FILES['mimagine']['tmp_name'], 'imagini/' . $_FILES['mimagine']['name']);
 
 			$data_start = $this->con->real_escape_string($_POST['mdata_start']);
 			$data_start_format = date("d-m-Y",strtotime($data_start));
@@ -125,7 +138,7 @@ class Proiecte {
 			$sql = $this->con->query($query);
 			if ($sql == true) {				
 			    $_SESSION['notificare'] = "Proiectul a fost actualizat";
-			    header("Location:proiecte.php");
+			    header("Location:proiect_pagina.php?proiectId=$id");
 			}else{
 			    $_SESSION['eroare'] = "Atentie: actualizarea proiectului NU s-a efectuat!";
 			}
@@ -194,7 +207,6 @@ class Proiecte {
 	public function stergeProiecteCategorie($id){
 
 		    $query = "DELETE FROM proiecte_categorii WHERE idCategorie = '$id'";
-		    echo $query;
 		    $sql = $this->con->query($query);
 
 			if ($sql == true) {
@@ -251,7 +263,6 @@ class Proiecte {
 	public function stergeProiecteStatusuri($id){
 
 		    $query = "DELETE FROM proiecte_statusuri WHERE idStatus = '$id'";
-		    echo $query;
 		    $sql = $this->con->query($query);
 
 			if ($sql == true) {
@@ -269,10 +280,9 @@ class Proiecte {
 
 		$task = $this->con->real_escape_string($_POST['task']);
 		$id_proiect= $this->con->real_escape_string($_POST['id_proiect']);
+		$status = '0';
 
-		print_r($_POST);
-
-		$query = "INSERT INTO proiecte_taskuri(id_proiect,task) VALUES('$id_proiect','$task')";
+		$query = "INSERT INTO proiecte_taskuri(id_proiect, task, status) VALUES('$id_proiect','$task','$status')";
 
 			$sql = $this->con->query($query);			
 			if ($sql == true) {
@@ -280,6 +290,39 @@ class Proiecte {
 			    header("Location:proiect_pagina.php?proiectId=$id_proiect");
 			} else {
 				$_SESSION['eroare'] = "Atentie: Nu s-a reusit introducerea task-ului!";
+			}
+	}
+
+	public function statusTaskRezolvat($idTask,$pagina){
+		$query = "UPDATE proiecte_taskuri SET status='1' WHERE id=$idTask";
+		$sql = $this->con->query($query);
+		if ($sql == true) {
+			$_SESSION['notificare'] = "Taskul a fost actualizat";
+		    header("Location: $pagina.php");
+		} else {
+			$_SESSION['eroare'] = "Atentie: Taskul NU s-a actulizat!";
+		}		
+	}
+	public function StatusTaskNerezolvat($idTask,$pagina){
+		$query = "UPDATE proiecte_taskuri SET status='0' WHERE id=$idTask";
+		$sql = $this->con->query($query);
+		if ($sql == true) {
+			$_SESSION['notificare'] = "Taskul a fost actualizat";
+		    header("Location:$pagina.php");
+		} else {
+			$_SESSION['eroare'] = "Atentie: Taskul NU s-a actulizat!";
+		}		
+	}
+
+	public function seteazaPrioritateTask($idTask){
+
+		$query = "UPDATE proiecte_taskuri SET status='1' WHERE id=$idTask";
+
+			$sql = $this->con->query($query);			
+			if ($sql == true) {
+				$_SESSION['notificare'] = "Task-ul a fost actualizat";
+			} else {
+				$_SESSION['eroare'] = "Atentie: task-ul NU s-a actualizat!";
 			}
 	}
 
@@ -297,7 +340,7 @@ class Proiecte {
 			} 	
 	}
 
-	public function afiseazaTaskuri (){		
+	public function afiseazaTaskuri(){	
 		    $query = "SELECT * FROM proiecte_taskuri";
 		    $result = $this->con->query($query);
 		
@@ -308,6 +351,41 @@ class Proiecte {
 		    }
 			return $data;
 		} 
+	}
+
+	public function afiseazaTaskuriWidget(){	
+		    $query = "SELECT * FROM proiecte_taskuri WHERE status = 0";
+		    $result = $this->con->query($query);
+		
+		if (!empty($result) && $result->num_rows > 0) {
+		    $data = array();
+		    while ($row = $result->fetch_assoc()) {
+		           $data[] = $row;
+		    }
+			return $data;
+		} 
+	}
+
+	public function stergeTask($id,$pagina){
+		    $query = "DELETE FROM proiecte_taskuri WHERE id = '$id'";
+		    $sql = $this->con->query($query);
+
+			if ($sql == true) {
+				$_SESSION['notificare'] = "Taskul a fost sters";
+				//header("Location: $pagina.php");
+			}else{
+				$_SESSION['eroare'] = "Atentie: Taskul NU a fost stears, incearca din nou!";
+			}
+	}
+	public function stergeTaskProiect($id, $pagina, $id_proiect){
+		    $query = "DELETE FROM proiecte_taskuri WHERE id = '$id'";
+		    $sql = $this->con->query($query);
+			if ($sql == true) {
+				$_SESSION['notificare'] = "Taskul a fost sters";
+				header("Location: $pagina.php?proiectId=$id_proiect");
+			}else{
+				$_SESSION['eroare'] = "Atentie: Taskul NU a fost stears, incearca din nou!";
+			}
 	}
 
 }

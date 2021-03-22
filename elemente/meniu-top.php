@@ -1,3 +1,9 @@
+<?php
+
+include "clase/utilizatori_functii.php";
+$usersObj = new Utilizatori();
+
+?>
 <div class="main-panel">
 	
 	<!-- Navbar -->
@@ -34,7 +40,8 @@
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
 	                    <a class="nav-link" href="utilizator_profil.php">
-	                        <span class="no-icon">Contul meu</span>
+	                    	<i class="fas fa-user"></i>
+	                        <span class="no-icon"><?php $usersObj->afiseazaNumeUtilizator($_SESSION['utilizator']); ?></span>
 	                    </a>
 	                </li>
 	                <li class="nav-item">

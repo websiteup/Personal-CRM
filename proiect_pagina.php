@@ -28,6 +28,12 @@
             </div>";
  	}
 
+ 	// Sterge task
+	if(isset($_GET['stergeTaskId']) && !empty($_GET['stergeTaskId'])) {
+	    $stergeTaskId = $_GET['stergeTaskId'];
+	    $proiecteObj->stergeTaskProiect($stergeTaskId, $paginaActiva, $proiectId);
+	}
+
 ?>
  <div class="container">
  	<div class="row">
@@ -35,8 +41,10 @@
  	<div class="col-md-4">
  	 	<div class="card mb-3 box-shadow"> 
  	 		<div class="card-body">
- 	 			<?php if(isset($proiect['imagine'])) { ?>
-					<img class="profile-img img-responsive d-block mx-auto" src="imagini/<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">
+ 	 			<?php if($proiect['imagine']) { ?>
+					<img class="profile-img img-fluid mx-auto" src="<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">
+				<?php } else { ?>
+					<img class="profile-img img-fluid d-block mx-auto" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">
 				<?php } ?>
 				<div class="card-text text-center"><?php echo $proiect['descriere']; ?></div>
 			</div>
@@ -122,7 +130,11 @@
 						<td style="width: 30px;"><?php echo $task['id']; ?></td>
 						<td><?php echo $task['task']; ?></td>
 						<td><?php echo $task['data']; ?></td>
-						<td style="width: 60px;">x</td>
+						<td style="width: 40px">
+							<a href="proiect_pagina.php?stergeTaskId=<?php echo $task['id'] ?>" class="btn btn-info btn-simple btn-link" style="color:red">
+				              <i class="far fa-trash-alt"></i>
+				            </a>
+				        </td>
 					</tr>
 					<?php } ?>
 					<?php } ?>

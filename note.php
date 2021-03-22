@@ -10,10 +10,16 @@
   // Apeleaza functia pentru afisearea notelor
   $listaNote = $noteObj->afiseazaNotele();
 
-  // Adauga date in tabelul intrari
+  // Adauga date in tabelul note
   if(isset($_POST['submit'])) {
-    print_r($_POST);
+    //print_r($_POST);
     $noteObj->introducereNota($_POST);
+  }
+
+  // Sterge nota
+  if(isset($_GET['stergeId']) && !empty($_GET['stergeId'])) {
+      $stergeId = $_GET['stergeId'];
+      $noteObj->stergeNota($stergeId);
   }
 
 ?>
@@ -26,13 +32,17 @@
     if ($listaNote > 0) {
     foreach ($listaNote as $nota) { ?>
 
-    <div class="col-md-4 p-2">    
-      <div class="bg-white p-2 rounded">    
-        <div class="box-nota">
-            <?php echo $nota['nota']; ?>
-        </div>
-        <div class="user-info text-right mr-2">
-          <span class="date text-black-50"><i><?php echo $nota['data']; ?></i></span>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="bg-white card-body rounded">    
+          <div class="box-nota">
+              <?php echo $nota['nota']; ?>
+          </div>
+          <div class="user-info text-right mr-2">
+            <span class="date text-black-50"><i><?php echo $nota['data']; ?></i></span>
+          </div>
+          <a href="nota_editare.php?modificaId=<?php echo $nota['id'] ?>"  class="card-link">Editare</a>
+          <a href="note.php?stergeId=<?php echo $nota['id'] ?>" class="card-link">Sterge</a>
         </div>
       </div>
     </div>

@@ -19,6 +19,9 @@
   // Afiseaza categoriile din tabelul proiecte_categorii
   $categorii = $proiecteObj->afiseazaProiecteCategorii();
 
+  // Afiseaza statusurile din tabelul proiecte_statusuri
+  $statusuri = $proiecteObj->afiseazaProiecteStatusuri();
+
 ?>
  
 <div class="top-pagina text-center" style="padding:15px; margin-bottom: 10px">
@@ -40,13 +43,13 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="adresa">Link:</label>
       <div class="col-sm-10">
-      <input type="text" class="form-control" name="link" placeholder="Link" required="">
+      <input type="text" class="form-control" name="link" placeholder="Link">
       </div>
     </div>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="descriere">Descriere:</label>
       <div class="col-sm-10">
-      <input type="textarea" class="form-control" name="descriere" placeholder="Descriere" required="">
+      <input type="textarea" class="form-control" name="descriere" placeholder="Descriere">
       </div>
     </div>    
     <div class="form-group row">
@@ -71,7 +74,13 @@
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="status">Status:</label>
       <div class="col-sm-10">
-      <input type="text" class="form-control" name="status" placeholder="Status" required="">
+
+      <select class="form-control" name="status" >
+      <?php foreach ($statusuri as $status) {
+              echo "<option style='color:".$status['culoareStatus']."'value='".$status['idStatus']."'>".$status['numeStatus']."</option>";
+  
+      } ?>
+      </select>   
       </div>
     </div>
     <div class="form-group row">

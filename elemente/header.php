@@ -1,6 +1,8 @@
 <?php 
 
-ob_start(); // rezolva eroare header already sen
+ob_start(); // rezolva eroare header already send
+
+$start_time = microtime(true); // Timpul de incarcarea a paginii
 
 include "clase/clienti_functii.php";
 include "clase/proiecte_functii.php";
@@ -14,10 +16,12 @@ session_start(); // incepe sesiunea pentru notificari si sistemul de autentifica
 
 
 // Autenficare si Dezauntetificare
-
 if (!isset($_SESSION['utilizator']) || (trim ($_SESSION['utilizator']) == '')){
     header('location:utilizator_autentificare.php');
 }
+// Face o variabila cu url-ul pagini fara extensie
+// Variabilia utiliza atat pentru meniu cat si pentru redirectionare in unele functii pe care le folosesc pe mai multe paginii
+$paginaActiva = basename($_SERVER['PHP_SELF'], ".php");
 
 ?>
 

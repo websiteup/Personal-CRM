@@ -24,7 +24,7 @@
 
 // Actualizeaza datele din tabelul proiecte
   if(isset($_POST['submit'])) {
-    print_r($_POST);
+    print_r($_FILES);
     $proiecteObj->modificaProiect($_POST);
   }
 
@@ -55,7 +55,12 @@ if (isset($_POST['submit'])) {
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="descriere">Imagine:</label>
       <div class="col-sm-10">
-      <img width="100" src="imagini/<?php echo $proiect['imagine']; ?>" alt="<?php echo $proiect['nume']; ?>">
+
+      <?php if($proiect['imagine']) { ?>
+          <img style="max-width: 150px;" class="profile-img img-fluid" src="<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">
+        <?php } else { ?>
+          <img style="max-width: 150px;" class="profile-img img-fluid d-block" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">
+        <?php } ?> 
       <input type="file" class="form-control" name="mimagine">
       </div>
     </div> 

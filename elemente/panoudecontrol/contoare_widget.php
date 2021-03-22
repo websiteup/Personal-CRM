@@ -20,15 +20,15 @@
     <div class="col-md-3">
       <div class="card-counter danger">
         <i class="fas fa-globe"></i>
-        <span class="count-numbers"><?php $contoareObj->afiseazaContor('proiecte'); ?></span>
-        <span class="count-name">Proiecte</span>
+        <span class="count-numbers"><?php $contoareObj->afiseazaProiecte(); ?></span>
+        <span class="count-name">Proiecte in lucru sau neincepute</span>
       </div>
     </div>
 
     <div class="col-md-3">
       <div class="card-counter success">
         <i class="fas fa-tools"></i>
-        <span class="count-numbers">6875</span>
+        <span class="count-numbers"><?php $contoareObj->afiseazaSumaTotala(); ?></span>
         <span class="count-name">Suma totala proiecte nefinalizate</span>
       </div>
     </div>
@@ -36,8 +36,8 @@
     <div class="col-md-3">
       <div class="card-counter info">
         <i class="fas fa-user-check"></i>
-        <span class="count-numbers"><?php $contoareObj->afiseazaContor('proiecte_taskuri'); ?></span>
-        <span class="count-name">Taskuri rezolvate</span>
+        <span class="count-numbers"><?php $contoareObj->afiseazaTaskuriNerezolvate(); ?></span>
+        <span class="count-name">Taskuri nerezolvate</span>
       </div>
     </div>
 </div>
