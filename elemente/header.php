@@ -8,6 +8,8 @@ include "clase/clienti_functii.php";
 include "clase/proiecte_functii.php";
 include "clase/note_functii.php";
 include "clase/contoare_functii.php";
+include "clase/utilizatori_functii.php";
+
 
 // As putea sa folosesc functia autoloader, poate pe viitor
 // vezi aici https://www.brainbell.com/php/auto-loading.html
@@ -22,6 +24,9 @@ if (!isset($_SESSION['utilizator']) || (trim ($_SESSION['utilizator']) == '')){
 // Face o variabila cu url-ul pagini fara extensie
 // Variabilia utiliza atat pentru meniu cat si pentru redirectionare in unele functii pe care le folosesc pe mai multe paginii
 $paginaActiva = basename($_SERVER['PHP_SELF'], ".php");
+
+// Am pus aici ca sa nu repet codul
+$utilizatoriObj = new Utilizatori();
 
 ?>
 
@@ -74,4 +79,4 @@ $paginaActiva = basename($_SERVER['PHP_SELF'], ".php");
             <?php unset($_SESSION['eroare']); ?>
         </div>
 <?php } ?>
-<?php print_r($_SESSION); ?>
+<!-- <?php print_r($_SESSION); ?> -->

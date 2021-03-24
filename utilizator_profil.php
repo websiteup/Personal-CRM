@@ -4,10 +4,6 @@
 
   include 'elemente/header.php'; // include header-ul   
 
-  include 'clase/utilizatori_functii.php'; // clasa Utilizatori 
-
-  $utilizatoriObj = new Utilizatori();
-
   // Apeleaza functia pentru afisarea listei cu utilizatori
   $utilizator = $utilizatoriObj->afiseazaDateUtilizator($_SESSION['utilizator']);
   // $date = array(
@@ -17,9 +13,7 @@
   //   'nume',
   //   'prenume',
   //    );
-  $nume_complet = implode(",", $utilizator);
-
-  print_r($utilizator);
+  $nume_complet = $utilizator['nume'].' '.$utilizator['prenume'];
 
 ?>
  
@@ -43,11 +37,13 @@
   <div class="form-group row">
     <label for="Parola" class="col-sm-2 col-form-label">Parola</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="Parola" placeholder="<?php echo $utilizator['parola']; ?>">
+      <input type="text" readonly class="form-control-plaintext" id="Parola" placeholder="Secret !">
     </div>
   </div>
 </form>
 </div>
+
+<script type="text/javascript"></script>
 
 <?php
 include 'elemente/footer.php';

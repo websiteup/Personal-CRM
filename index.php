@@ -15,18 +15,23 @@
         <?php include 'elemente/panoudecontrol/proiecte_widget.php'; ?>            
         </div>
 
-        <!-- include lista scurta cu proiecte pe prima pagina  -->
+        <!-- include lista scurta cu taskuri nerezolvate -->
         <div class="col-md-6">
-        <?php include 'elemente/panoudecontrol/taskuri_widget.php'; ?>           
+        <?php include 'elemente/panoudecontrol/taskuri_nerezolvate_widget.php'; ?>           
         </div>
 
     </div>
 
     <div class="row">
 
-        <!-- include lista scurta cu proiecte pe prima pagina  -->
+        <!-- include lista scurta cu note  -->
         <div class="col-md-6">
         <?php include 'elemente/panoudecontrol/note_widget.php'; ?>            
+        </div>
+
+        <!-- include lista scurta cu taskuri rezolvate -->
+        <div class="col-md-6">
+        <?php include 'elemente/panoudecontrol/taskuri_rezolvate_widget.php'; ?>           
         </div>
 
     </div>

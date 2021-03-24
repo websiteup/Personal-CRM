@@ -23,21 +23,9 @@
   $statusuri = $proiecteObj->afiseazaProiecteStatusuri();
 
 // Actualizeaza datele din tabelul proiecte
-  if(isset($_POST['submit'])) {
-    print_r($_FILES);
+  if(isset($_POST['submit'])) {  
     $proiecteObj->modificaProiect($_POST);
   }
-
-if (isset($_POST['submit'])) {
-  print_r($_POST);
-  if ($_FILES['mimagine']['size'] > 2000000){
-    echo 'Maxim 2 mb';
-  } else {
-    // salvam fisierul
-    echo 'Functioneaza <br/>';
-    print_r($_FILES);
-  }
-}
 
 ?>
  
@@ -56,10 +44,10 @@ if (isset($_POST['submit'])) {
       <label class="col-sm-2 col-form-label" for="descriere">Imagine:</label>
       <div class="col-sm-10">
 
-      <?php if($proiect['imagine']) { ?>
-          <img style="max-width: 150px;" class="profile-img img-fluid" src="<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">
+      <?php if(empty($proiect['imagine'])) { ?>
+          <img style="max-width: 150px;" class="profile-img img-fluid d-block" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">         
         <?php } else { ?>
-          <img style="max-width: 150px;" class="profile-img img-fluid d-block" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">
+          <img style="max-width: 150px;" class="profile-img img-fluid" src="<?php echo $proiect['imagine'];?>" alt="<?php echo $proiect['nume']; ?>">
         <?php } ?> 
       <input type="file" class="form-control" name="mimagine">
       </div>

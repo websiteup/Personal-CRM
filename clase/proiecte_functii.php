@@ -21,7 +21,8 @@ class Proiecte {
 	// Introduce datele in tabelul proiecte
 	public function introducereDateProiect(){
 		$nume = $this->con->real_escape_string($_POST['nume']);	
-		$link = $this->con->real_escape_string($_POST['link']);	
+		$link = $this->con->real_escape_string($_POST['link']);
+		$categorie = $this->con->real_escape_string($_POST['categorie']);	
 		$descriere = $this->con->real_escape_string($_POST['descriere']);		
 		$client = $this->con->real_escape_string($_POST['client']);
 		$buget = $this->con->real_escape_string($_POST['buget']);
@@ -33,10 +34,11 @@ class Proiecte {
 		$data_final = $this->con->real_escape_string($_POST['data_final']);
 		$data_final_format = date("Y-m-d",strtotime($data_final));
 		
-		$query = "INSERT INTO proiecte(nume, link, descriere, id_client, buget, status, data_start, data_final) 
+		$query = "INSERT INTO proiecte(nume, link, categorie, descriere, id_client, buget, status, data_start, data_final) 
 		VALUES(
 			'$nume',
 			'$link',
+			'$categorie',
 			'$descriere',			
 			'$client',
 			'$buget',
@@ -100,18 +102,33 @@ class Proiecte {
 	}
 
 	// Actualizeaza datele din tabelul proiecte
-	public function modificaProiect($client){
+	public function modificaProiect(){			
+
+			$query = "SELECT * FROM proiecte WHERE id = '$id'";
+		    $result = $this->con->query($query);
+			if (!empty($result) && $result->num_rows > 0) {
+				$proiect = $result->fetch_assoc();
+			}	
+			
+			print_r($proiect);
+
 			$nume = $this->con->real_escape_string($_POST['mnume']);	
 			$link = $this->con->real_escape_string($_POST['mlink']);	
 			$categorie = $this->con->real_escape_string($_POST['mcategorie']);	
-			$descriere = $this->con->real_escape_string($_POST['mdescriere']);		
-			$imagine = 'imagini/'.$_FILES['mimagine']['name'];		
+			$descriere = $this->con->real_escape_string($_POST['mdescriere']);
+			
 			$client = $this->con->real_escape_string($_POST['mclient']);
 			$buget = $this->con->real_escape_string($_POST['mbuget']);
 			$status = $this->con->real_escape_string($_POST['mstatus']);
 
-			//incarca fisierul in folderul imagini
-			move_uploaded_file($_FILES['mimagine']['tmp_name'], 'imagini/' . $_FILES['mimagine']['name']);
+			// incarca fisierul in folderul imagini
+			// Inca nu functioneaza... oare de ce ?
+			if (isset($_FILES['mimagine']['name'])) {
+				$imagine = 'imagini/'.$_FILES['mimagine']['name'];				
+				move_uploaded_file($_FILES['mimagine']['tmp_name'], $imagine);
+			} else {
+				$imagine = $proiect['imagine'];
+			}
 
 			$data_start = $this->con->real_escape_string($_POST['mdata_start']);
 			$data_start_format = date("d-m-Y",strtotime($data_start));
@@ -121,28 +138,28 @@ class Proiecte {
 
 			$id = $this->con->real_escape_string($_POST['id']);
 
-		if (!empty($id) && !empty($client)) {
-			$query = "UPDATE proiecte SET 
-			nume = '$nume',
-			link = '$link',
-			categorie = '$categorie',
-			descriere = '$descriere',
-			imagine = '$imagine',
-			id_client = '$client',
-			buget = '$buget',
-			status = '$status',
-			data_start = '$data_start',
-			data_final = '$data_final'
-			WHERE id = '$id'";
+			if (!empty($id) && !empty($client)) {
+				$query = "UPDATE proiecte SET 
+				nume = '$nume',
+				link = '$link',
+				categorie  = '$categorie',
+				descriere  = '$descriere',
+				imagine    = '$imagine',
+				id_client  = '$client',
+				buget      = '$buget',
+				status     = '$status',
+				data_start = '$data_start',
+				data_final = '$data_final'
+				WHERE id = '$id'";
 
-			$sql = $this->con->query($query);
-			if ($sql == true) {				
-			    $_SESSION['notificare'] = "Proiectul a fost actualizat";
-			    header("Location:proiect_pagina.php?proiectId=$id");
-			}else{
-			    $_SESSION['eroare'] = "Atentie: actualizarea proiectului NU s-a efectuat!";
-			}
-		}			
+				$sql = $this->con->query($query);
+				if ($sql == true) {				
+				    $_SESSION['notificare'] = "Proiectul a fost actualizat";
+				    header("Location:proiect_pagina.php?proiectId=$id");
+				}else{
+				    $_SESSION['eroare'] = "Atentie: actualizarea proiectului NU s-a efectuat!";
+				}
+			}			
 	}
 
 	// Sterge randul din tabelul clienti
@@ -313,6 +330,27 @@ class Proiecte {
 			$_SESSION['eroare'] = "Atentie: Taskul NU s-a actulizat!";
 		}		
 	}
+	// Functiile pentru pagina proiect (Sa gasesc o metoda sa nu mai repet codul)
+	public function statusTaskRezolvatPagina($idTask,$pagina,$id_proiect){
+		$query = "UPDATE proiecte_taskuri SET status='1' WHERE id=$idTask";
+		$sql = $this->con->query($query);
+		if ($sql == true) {
+			$_SESSION['notificare'] = "Taskul a fost actualizat";
+		    header("Location: $pagina.php?proiectId=$id_proiect");
+		} else {
+			$_SESSION['eroare'] = "Atentie: Taskul NU s-a actulizat!";
+		}		
+	}
+	public function StatusTaskNerezolvatPagina($idTask,$pagina,$id_proiect){
+		$query = "UPDATE proiecte_taskuri SET status='0' WHERE id=$idTask";
+		$sql = $this->con->query($query);
+		if ($sql == true) {
+			$_SESSION['notificare'] = "Taskul a fost actualizat";
+		    header("Location:$pagina.php?proiectId=$id_proiect");
+		} else {
+			$_SESSION['eroare'] = "Atentie: Taskul NU s-a actulizat!";
+		}		
+	}
 
 	public function seteazaPrioritateTask($idTask){
 
@@ -328,7 +366,7 @@ class Proiecte {
 
 	public function afiseazaTaskuriByID($id){
 
-			$query = "SELECT id, task, data FROM proiecte_taskuri WHERE id_proiect = '$id'";
+			$query = "SELECT * FROM proiecte_taskuri WHERE id_proiect = '$id'";
 		    $result = $this->con->query($query);		
 
 			if (!empty($result) && $result->num_rows > 0) {
@@ -353,8 +391,20 @@ class Proiecte {
 		} 
 	}
 
-	public function afiseazaTaskuriWidget(){	
+	public function afiseazaTaskuriNerezolvateWidget(){	
 		    $query = "SELECT * FROM proiecte_taskuri WHERE status = 0";
+		    $result = $this->con->query($query);
+		
+		if (!empty($result) && $result->num_rows > 0) {
+		    $data = array();
+		    while ($row = $result->fetch_assoc()) {
+		           $data[] = $row;
+		    }
+			return $data;
+		} 
+	}
+	public function afiseazaTaskuriRezolvateWidget(){	
+		    $query = "SELECT * FROM proiecte_taskuri WHERE status = 1";
 		    $result = $this->con->query($query);
 		
 		if (!empty($result) && $result->num_rows > 0) {

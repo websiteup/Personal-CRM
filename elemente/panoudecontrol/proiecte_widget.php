@@ -45,7 +45,7 @@
   </table>
 
   <?php } else { ?>
-       <p class="text-center">Adauga un proiect</p>
+       <p class="text-center p-2">Adauga un proiect</p>
       <?php } ?>
 
 </div>

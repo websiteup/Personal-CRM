@@ -1,7 +1,23 @@
 <?php 
 
 session_start(); /* Incepe sesiunea */
- 
+
+require_once "config/bazadedate.php";
+
+$link = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+if (!$link) {
+    echo "Eroare: Nu a fost posibilă conectarea la MySQL." . PHP_EOL;
+    echo "Valoarea errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Valoarea error: " . mysqli_connect_error() . PHP_EOL;
+    exit;
+}
+
+echo "Succes: Conexiunea la MySQL a fost stabilită! Baza de date my_db este minunată." . PHP_EOL;
+echo "Informație despre host: " . mysqli_get_host_info($link) . PHP_EOL;
+
+mysqli_close($link);
+
 include "clase/utilizatori_functii.php";
 
 $utilizatoriObj = new Utilizatori();
@@ -11,9 +27,6 @@ $utilizatoriObj = new Utilizatori();
 if(isset($_POST['submit'])){
   $utilizator = $utilizatoriObj->escape_string($_POST['utilizator']);
   $parola = $utilizatoriObj->escape_string($_POST['parola']);
-
-  echo $utilizator; 
-  echo $parola; 
  
   $autentificare = $utilizatoriObj->verificaAutentificare($utilizator, $parola);
   if($autentificare === false){

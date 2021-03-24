@@ -35,6 +35,12 @@
   <form action="proiect_adauga.php" method="POST">
     <div class="card box-shadow p-4"> 
     <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="descriere">Imagine:</label>
+      <div class="col-sm-10">
+      <input type="file" class="form-control" name="imagine">
+      </div>
+    </div>
+    <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="nume">Nume:</label>
       <div class="col-sm-10">
       <input type="text" class="form-control" name="nume" placeholder="Numele companiei" required="">
@@ -69,6 +75,19 @@
       <label class="col-sm-2 col-form-label" for="buget">Buget:</label>
       <div class="col-sm-10">
       <input type="text" class="form-control" name="buget" placeholder="Buget" required="">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label" for="client">Categorie:</label>
+      <div class="col-sm-10">
+
+      <select class="form-control" name="categorie" >
+      <option hidden>--- Alege o categorie ---</option>
+      <?php foreach ($categorii as $categorie) {
+              echo "<option value='".$categorie['idCategorie']."'>".$categorie['numeCategorie']."</option>";
+  
+      } ?>
+      </select>       
       </div>
     </div>
     <div class="form-group row">

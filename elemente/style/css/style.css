@@ -41,6 +41,10 @@ input.btn{
 	width: 100%!important;
 }
 
+.no-icon{
+  margin-left: 5px;
+}
+
 /* Panou de control */
 .card-counter{
     box-shadow: 2px 2px 10px #DADADA;

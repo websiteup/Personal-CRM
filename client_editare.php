@@ -28,7 +28,7 @@
 
   <div class="col-md-7 mx-auto">
 
-  <form action="clienti_editare.php" method="POST">
+  <form action="client_editare.php" method="POST">
     <div class="card box-shadow p-4"> 
     <div class="form-group row">
       <label class="col-sm-2 col-form-label" for="nume">Nume:</label>
@@ -46,12 +46,6 @@
       <label class="col-sm-2 col-form-label" for="adresa">Adresa:</label>
       <div class="col-sm-10">
       <input type="text" class="form-control" name="madresa" value="<?php echo $client['adresa']; ?>" required="">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label" for="website">Proiecte:</label>
-      <div class="col-sm-10">
-      <input type="text" class="form-control" name="mproiecte" value="<?php echo $client['proiecte']; ?>" required="">
       </div>
     </div>
     <div class="form-group row">

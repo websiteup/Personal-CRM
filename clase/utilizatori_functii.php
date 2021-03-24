@@ -16,6 +16,9 @@ class Utilizatori {
 			return $this->con;
 		}
 	}
+	public function index(){
+		
+	}
 
 	public function verificaAutentificare($utilizator, $parola){
  

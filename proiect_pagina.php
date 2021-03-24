@@ -14,7 +14,7 @@
 
 	// ToDoList
 	$taskuri = $proiecteObj->afiseazaTaskuriByID($proiect['id']);
-	print_r($taskuri);
+	//print_r($taskuri);
 
  	// Adauga date in tabelul intrari_taskuri pt. ToDoList
 	if(isset($_POST['submit'])) {
@@ -31,8 +31,22 @@
  	// Sterge task
 	if(isset($_GET['stergeTaskId']) && !empty($_GET['stergeTaskId'])) {
 	    $stergeTaskId = $_GET['stergeTaskId'];
-	    $proiecteObj->stergeTaskProiect($stergeTaskId, $paginaActiva, $proiectId);
+	    $id_proiect = $_GET['proiectId'];
+	    $proiecteObj->stergeTaskProiect($stergeTaskId, $paginaActiva, $id_proiect);
 	}
+
+	// Seteaza status task-ului ca rezolvat
+	if(isset($_GET['taskRezolvatId']) && !empty($_GET['taskRezolvatId'])) {
+      $taskId = $_GET['taskRezolvatId'];
+      $id_proiect = $_GET['proiectId'];
+      $proiecteObj->statusTaskRezolvatPagina($taskId, $paginaActiva, $id_proiect);
+  	}
+  	// Seteaza status task-ului ca nerezolvat
+  	if(isset($_GET['taskNerezolvatId']) && !empty($_GET['taskNerezolvatId'])) {
+      $taskId = $_GET['taskNerezolvatId'];
+      $id_proiect = $_GET['proiectId'];
+      $proiecteObj->statusTaskNerezolvatPagina($taskId, $paginaActiva, $id_proiect);
+  	}
 
 ?>
  <div class="container">
@@ -41,11 +55,11 @@
  	<div class="col-md-4">
  	 	<div class="card mb-3 box-shadow"> 
  	 		<div class="card-body">
- 	 			<?php if($proiect['imagine']) { ?>
-					<img class="profile-img img-fluid mx-auto" src="<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">
-				<?php } else { ?>
-					<img class="profile-img img-fluid d-block mx-auto" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">
-				<?php } ?>
+ 	 			<?php if(empty($proiect['imagine'])) { ?>
+		          <img class="profile-img img-fluid d-block" src="imagini/noimage.jpg" alt="<?php echo $proiect['nume']; ?>">          
+		        <?php } else { ?>
+		          <img class="profile-img img-fluid d-block" src="<?php echo $proiect['imagine'] ?? "imagini/noimage.jpg" ?>" alt="<?php echo $proiect['nume']; ?>">          
+		        <?php } ?> 
 				<div class="card-text text-center"><?php echo $proiect['descriere']; ?></div>
 			</div>
 
@@ -127,11 +141,21 @@
 					if ($taskuri > 0) {
 					foreach ($taskuri as $task) { ?>
 					<tr>
-						<td style="width: 30px;"><?php echo $task['id']; ?></td>
+						<td style="width: 30px;">
+						<?php if($task['status'] == 0 ){ ?>   
+				            <a href="proiect_pagina.php?taskRezolvatId=<?php echo $task['id'] ?>&proiectId=<?php echo $proiect['id']; ?>" class="btn btn-info btn-simple btn-link" style="color:blue">
+				              <i class="far fa-square"></i>
+				            </a>
+				        <?php }else{ ?>
+				        	<a href="proiect_pagina.php?taskNerezolvatId=<?php echo $task['id'] ?>&proiectId=<?php echo $proiect['id']; ?>"  class="btn btn-info btn-simple btn-link" style="color:blue">
+				              <i class="fas fa-check-square"></i>
+				            </a>
+				        <?php } ?>
+	    				</td>
 						<td><?php echo $task['task']; ?></td>
 						<td><?php echo $task['data']; ?></td>
 						<td style="width: 40px">
-							<a href="proiect_pagina.php?stergeTaskId=<?php echo $task['id'] ?>" class="btn btn-info btn-simple btn-link" style="color:red">
+							<a href="proiect_pagina.php?stergeTaskId=<?php echo $task['id'] ?>&proiectId=<?php echo $proiect['id']; ?>" class="btn btn-info btn-simple btn-link" style="color:red">
 				              <i class="far fa-trash-alt"></i>
 				            </a>
 				        </td>

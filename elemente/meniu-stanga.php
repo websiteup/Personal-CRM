@@ -58,7 +58,7 @@
                     <li>
                         <a class="nav-link" href="./despre.php">
                             <i class="fas fa-info-circle"></i>
-                            <p>Despre proiect</p>
+                            <p>Plan proiect</p>
                         </a>
                     </li>
 

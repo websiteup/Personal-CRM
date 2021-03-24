@@ -1,9 +1,3 @@
-<?php
-
-include "clase/utilizatori_functii.php";
-$usersObj = new Utilizatori();
-
-?>
 <div class="main-panel">
 	
 	<!-- Navbar -->
@@ -15,33 +9,11 @@ $usersObj = new Utilizatori();
 	            <span class="navbar-toggler-bar burger-lines"></span>
 	        </button>
 	        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-	            <ul class="nav navbar-nav mr-auto">
-	                <li class="dropdown nav-item">
-	                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-	                        <i class="nc-icon nc-planet"></i>
-	                        <span class="notification">5</span>
-	                        <span class="d-lg-none">Notification</span>
-	                    </a>
-	                    <ul class="dropdown-menu">
-	                        <a class="dropdown-item" href="#">Notification 1</a>
-	                        <a class="dropdown-item" href="#">Notification 2</a>
-	                        <a class="dropdown-item" href="#">Notification 3</a>
-	                        <a class="dropdown-item" href="#">Notification 4</a>
-	                        <a class="dropdown-item" href="#">Another notification</a>
-	                    </ul>
-	                </li>
-	                <li class="nav-item">
-	                    <a href="#" class="nav-link">
-	                        <i class="nc-icon nc-zoom-split"></i>
-	                        <span class="d-lg-block">&nbsp;Search</span>
-	                    </a>
-	                </li>
-	            </ul>
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
 	                    <a class="nav-link" href="utilizator_profil.php">
 	                    	<i class="fas fa-user"></i>
-	                        <span class="no-icon"><?php $usersObj->afiseazaNumeUtilizator($_SESSION['utilizator']); ?></span>
+	                        <span class="no-icon"><?php $utilizatoriObj->afiseazaNumeUtilizator($_SESSION['utilizator']); ?></span>
 	                    </a>
 	                </li>
 	                <li class="nav-item">
