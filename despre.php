@@ -6,6 +6,24 @@
     ?>
 <div class="container">
 	<div class="row">
+		<div class="col-md-12">
+		<p>Am inceput proiectul ca un CMS, vroiam sa fac un fel de varul de la tara a lui Wordpress dar in timp ce lucram mi-a venit ideea sa fac un CRM pentru mine, poate ma ajuta sa fiu mai ordonat.</p>
+
+		<p>Pentru front end folosesc bootstrap 4, am gasit si un dashboard gratuit <br/>
+		- https://github.com/creativetimofficial/light-bootstrap-dashboard</p>
+
+		<p>Am incercat sa folosesc doar HTML, CSS, PHP si MYSQL <br/>
+		Javascript am folosit doar pentru CKeditor 4 - https://ckeditor.com/ckeditor-4/</p>
+		</div>
+	</div>
+
+	<hr>
+	
+	<p> Link github: <a href="https://github.com/websiteup/Personal-CRM">https://github.com/websiteup/Personal-CRM</a> </p>
+
+	<hr>
+
+	<div class="row">
 
 		<div class="col-md-3">
 			<p>Info-- clienti</p>

@@ -2,22 +2,6 @@
 
 session_start(); /* Incepe sesiunea */
 
-require_once "config/bazadedate.php";
-
-$link = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-
-if (!$link) {
-    echo "Eroare: Nu a fost posibilă conectarea la MySQL." . PHP_EOL;
-    echo "Valoarea errno: " . mysqli_connect_errno() . PHP_EOL;
-    echo "Valoarea error: " . mysqli_connect_error() . PHP_EOL;
-    exit;
-}
-
-echo "Succes: Conexiunea la MySQL a fost stabilită! Baza de date my_db este minunată." . PHP_EOL;
-echo "Informație despre host: " . mysqli_get_host_info($link) . PHP_EOL;
-
-mysqli_close($link);
-
 include "clase/utilizatori_functii.php";
 
 $utilizatoriObj = new Utilizatori();
@@ -93,6 +77,10 @@ if(isset($_POST['submit'])){
                         </div>
 
                     </form>
+
+                    <div class="alert alert-warning" role="alert">
+                <h4>In cazul in care nu functioneaza autentificarea, verificati daca baza de date config/db.sql este instalata si setarile din config/bazadedate.php sunt corecte </h4>
+                    </div>
 
                 </div>
             </div>
