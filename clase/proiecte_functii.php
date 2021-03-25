@@ -104,6 +104,8 @@ class Proiecte {
 	// Actualizeaza datele din tabelul proiecte
 	public function modificaProiect(){			
 
+			$id = $this->con->real_escape_string($_POST['id']);
+
 			$query = "SELECT * FROM proiecte WHERE id = '$id'";
 		    $result = $this->con->query($query);
 			if (!empty($result) && $result->num_rows > 0) {
@@ -123,7 +125,7 @@ class Proiecte {
 
 			// incarca fisierul in folderul imagini
 			// Inca nu functioneaza... oare de ce ?
-			if (isset($_FILES['mimagine']['name'])) {
+			if ($_FILES['mimagine']['size']>0) {
 				$imagine = 'imagini/'.$_FILES['mimagine']['name'];				
 				move_uploaded_file($_FILES['mimagine']['tmp_name'], $imagine);
 			} else {
@@ -135,8 +137,6 @@ class Proiecte {
 
 			$data_final = $this->con->real_escape_string($_POST['mdata_final']);
 			$data_final_format = date("d-m-Y",strtotime($data_final));
-
-			$id = $this->con->real_escape_string($_POST['id']);
 
 			if (!empty($id) && !empty($client)) {
 				$query = "UPDATE proiecte SET 
